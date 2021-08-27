@@ -68,7 +68,7 @@
                                             <tr>
                                                 <td>{{ ordered_product.product }} ({% for item in ordered_product.variation.all %}
                                                     {{ item.variation_value }}
-                                                    {% endfor %}  ) - {{ ordered_product.product.prod_description }}</td>
+                                                    {% endfor %}) - {{ ordered_product.product.prod_description }}</td>
                                                 <td class="text-center">{{ ordered_product.quantity }}</td>
                                                 <td class="text-center">${{ ordered_product.product_price }} USD</td>
                                             </tr>
