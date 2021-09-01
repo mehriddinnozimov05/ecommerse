@@ -1,6 +1,6 @@
 from django import forms
-from django.db.models import fields
-from .models import Account
+from django.utils.html import format_html
+from .models import Account, UserProfile
 
 class RegistrationForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput(attrs={
@@ -39,3 +39,23 @@ class RegistrationForm(forms.ModelForm):
             raise forms.ValidationError(
                 "Password too short."
             )
+
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = Account
+        fields = ["first_name", "last_name", "phone_number"]
+    def __init__(self, *args, **kwargs):
+        super(UserForm, self).__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs['class'] = 'form-control'
+
+class ProfileForm(forms.ModelForm):
+    picture = forms.ImageField(required=False, error_messages={"error":("Only Images!")}, widget=forms.FileInput)
+    class Meta:
+        model = UserProfile
+        fields = ["address_line1", "address_line2", "city", "state", "country", "picture"]
+    def __init__(self, *args, **kwargs):
+        super(ProfileForm, self).__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs['class'] = 'form-control'
+        self.fields['picture'].widget.attrs['class'] = 'form-control-file'

@@ -73,4 +73,15 @@ class ReviewRating(models.Model):
     modified_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.subject
+        return f'user: {self.user.email} product: {self.product.prod_name} rating: {self.rating}'
+
+class ProductGallery(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, default=None)
+    image = models.ImageField(upload_to="store/products/")
+
+    class Meta:
+        verbose_name = 'product_gallery'
+        verbose_name_plural = 'product gallery'
+
+    def __str__(self):
+        return self.product.prod_name
